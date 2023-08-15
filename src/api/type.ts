@@ -1,4 +1,5 @@
-interface BaseResponse {
+interface BaseResponse<T> {
+  data: T;
   pagination: {
     last_visible_page: number;
     has_next_page: boolean;
@@ -29,7 +30,7 @@ interface OtherType {
   url: string;
 }
 
-interface AnimeResponse extends BaseResponse {
+interface Anime {
   mal_id: number;
   url: string;
   images: Record<string, ImageType>;
@@ -80,3 +81,5 @@ interface AnimeResponse extends BaseResponse {
   themes: OtherType[];
   demographics: OtherType[];
 }
+
+export interface AnimeResponse extends BaseResponse<Anime[]> {}
