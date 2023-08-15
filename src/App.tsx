@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchAnime } from "./api";
 import type { AnimeResponse } from "./api/type";
+import AppWrapper from "./components/app-wrapper";
 
 function App() {
   const [anime, setAnime] = useState<AnimeResponse | null>(null);
@@ -14,15 +15,9 @@ function App() {
   }, []);
 
   return (
-    <main className="">
-      <nav className="fixed top-0 w-full py-4 bg-violet-800">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-lg font-bold text-white">AnimeTha</p>
-        </div>
-      </nav>
-
-      <div className="container max-w-2xl mx-auto mt-24">
-        <div className="mb-8 content-search">
+    <AppWrapper>
+      <>
+        <div className="mt-24 mb-8 content-search">
           <input
             type="text"
             placeholder="Search Anime and more..."
@@ -47,8 +42,8 @@ function App() {
             ))}
           </div>
         </section>
-      </div>
-    </main>
+      </>
+    </AppWrapper>
   );
 }
 
