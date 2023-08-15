@@ -30,7 +30,7 @@ interface OtherType {
   url: string;
 }
 
-interface Anime {
+export interface Anime {
   mal_id: number;
   url: string;
   images: Record<string, ImageType>;
