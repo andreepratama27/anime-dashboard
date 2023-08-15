@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { fetchAnime } from "./lib/api";
+import { fetchAnime, fetchAnimeByQuery } from "./lib/api";
 import type { Anime } from "./lib/api/type";
 import AppWrapper from "./components/app-wrapper";
 import SearchInput from "./components/search-input";
+import { debounce } from "./utils";
 
 function App() {
   const observerTarget = useRef(null);
@@ -12,8 +13,8 @@ function App() {
   const fetchData = async () => {
     const result = await fetchAnime();
 
-    setAnime(result.data);
-    setPageInformation(result.pagination);
+    setAnime(result?.data);
+    setPageInformation(result?.pagination);
   };
 
   const fetchMore = async () => {
@@ -21,15 +22,27 @@ function App() {
     setAnime((prevState) => [...prevState, ...result.data]);
   };
 
+  const handleSearchChange = debounce(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const response = await fetchAnimeByQuery({ search: event.target.value });
+      setAnime(response.data);
+    },
+    1500
+  );
+
   const renderContent = () => {
     return (
       <div className="grid grid-cols-3 gap-4 anime-grid">
         {anime?.map((item, key) => (
           <div className="grid w-full" key={key}>
-            <img src={item.images.webp.image_url} className="h-full" />
+            <img
+              src={item.images.webp.image_url}
+              className="h-full"
+              loading="lazy"
+            />
 
             <div className="flex items-center px-2 h-14 min-h-10 img-title">
-              <p>{item.title}</p>
+              <a href={`/detail/${item.mal_id}`}>{item.title}</a>
             </div>
           </div>
         ))}
@@ -63,7 +76,7 @@ function App() {
   return (
     <AppWrapper>
       <>
-        <SearchInput />
+        <SearchInput onChange={handleSearchChange} />
 
         <section className="my-4 main-content">
           <div className="title">

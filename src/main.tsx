@@ -10,7 +10,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
-  { path: "/detail", element: <AnimeDetail /> },
+  { path: "/detail/:id", element: <AnimeDetail /> },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
