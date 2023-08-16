@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchAnime } from "./lib/services/anime.service";
 import { useInfiniteQuery } from "react-query";
 import AppWrapper from "./components/app-wrapper";
-import SearchInput from "./components/search-input";
 import { useInView } from "react-intersection-observer";
 import { debounce } from "./utils";
 
@@ -11,7 +10,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState("");
 
-  const { data, fetchNextPage, refetch } = useInfiniteQuery(
+  const { data, fetchNextPage } = useInfiniteQuery(
     ["animeInfinite"],
     async () => {
       const response = await fetchAnime({ page, filter });
@@ -28,13 +27,6 @@ function App() {
         return lastPage.pagination.page;
       },
     }
-  );
-
-  const handleSearch = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFilter(event.target.value);
-    },
-    1500
   );
 
   const renderContent = () => {
