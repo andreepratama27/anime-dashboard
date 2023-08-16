@@ -1,37 +1,25 @@
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 import AppWrapper from "../../components/app-wrapper";
-import { fetchAnimeDetail } from "../../lib/api";
-import { useEffect, useState } from "react";
-import { Anime } from "../../lib/api/type";
+import { fetchAnimeDetail } from "../../lib/services/anime.service";
 
 export default function AnimeDetail() {
   const params = useParams();
-  const [detail, setDetail] = useState<Anime | null>(null);
 
-  const fetchDetailPage = async () => {
-    const response = await fetchAnimeDetail({
-      id: parseInt(params?.id as string),
-    });
-
-    setDetail(response?.data);
-  };
-
-  useEffect(() => {
-    fetchDetailPage();
-  }, []);
-
-  console.log("fff", detail);
+  const { data: detail } = useQuery(["animeDetail"], () =>
+    fetchAnimeDetail({ id: parseInt(params?.id as string) })
+  );
 
   return (
     <AppWrapper>
       <main>
-        <div className="pt-4 app-title">
-          <p className="text-xl">{detail?.title}</p>
+        <div className="pt-8 app-title">
+          <p className="text-xl">{detail?.data?.title}</p>
         </div>
 
         <div className="flex items-center justify-between mt-4 app-menu">
           <div className="flex items-center justify-center gap-2 app-menu__info app-categories">
-            {detail?.genres.map((genre) => (
+            {detail?.data?.genres?.map((genre) => (
               <div
                 className="px-2 py-1 bg-blue-200 rounded categories"
                 key={genre.mal_id}
@@ -50,7 +38,7 @@ export default function AnimeDetail() {
 
         <div className="mt-4 bg-black image-jumbotron bg-gradient-to-b">
           <img
-            src={detail?.images?.jpg?.large_image_url}
+            src={detail?.data?.images?.jpg?.large_image_url}
             alt=""
             className="object-contain w-full h-[480px]"
             loading="lazy"
@@ -59,7 +47,7 @@ export default function AnimeDetail() {
 
         <div className="mt-2 anime-description">
           <p className="my-4 text-lg font-bold">Synopsis</p>
-          <p>{detail?.synopsis}</p>
+          <p>{detail?.data?.synopsis}</p>
         </div>
       </main>
     </AppWrapper>

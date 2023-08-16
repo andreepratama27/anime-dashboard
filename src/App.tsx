@@ -1,31 +1,38 @@
-import { useEffect, useRef, useState } from "react";
-import { fetchAnime, fetchAnimeByQuery } from "./lib/api";
-import type { Anime } from "./lib/api/type";
+import { useEffect, useState } from "react";
+import { fetchAnime } from "./lib/services/anime.service";
+import { useInfiniteQuery } from "react-query";
 import AppWrapper from "./components/app-wrapper";
 import SearchInput from "./components/search-input";
+import { useInView } from "react-intersection-observer";
 import { debounce } from "./utils";
 
 function App() {
-  const observerTarget = useRef(null);
-  const [anime, setAnime] = useState<Anime[]>([]);
-  const [pageInformation, setPageInformation] = useState<unknown>(null);
+  const { ref, inView } = useInView();
+  const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState("");
 
-  const fetchData = async () => {
-    const result = await fetchAnime();
+  const { data, fetchNextPage, refetch } = useInfiniteQuery(
+    ["animeInfinite"],
+    async () => {
+      const response = await fetchAnime({ page, filter });
+      const objResponse = {
+        ...response,
+        pagination: { ...response.pagination, page },
+      };
 
-    setAnime(result?.data);
-    setPageInformation(result?.pagination);
-  };
+      return objResponse;
+    },
+    {
+      enabled: !!filter,
+      getNextPageParam: (lastPage) => {
+        return lastPage.pagination.page;
+      },
+    }
+  );
 
-  const fetchMore = async () => {
-    const result = await fetchAnime();
-    setAnime((prevState) => [...prevState, ...result.data]);
-  };
-
-  const handleSearchChange = debounce(
-    async (event: React.ChangeEvent<HTMLInputElement>) => {
-      const response = await fetchAnimeByQuery({ search: event.target.value });
-      setAnime(response.data);
+  const handleSearch = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFilter(event.target.value);
     },
     1500
   );
@@ -33,59 +40,43 @@ function App() {
   const renderContent = () => {
     return (
       <div className="grid grid-cols-3 gap-4 anime-grid">
-        {anime?.map((item, key) => (
-          <div className="grid w-full" key={key}>
-            <img
-              src={item.images.webp.image_url}
-              className="h-full"
-              loading="lazy"
-            />
+        {data?.pages?.map((page) => {
+          return page?.data?.map((item) => (
+            <div className="grid w-full" key={item.mal_id}>
+              <img
+                src={item.images.webp.image_url}
+                className="h-full"
+                loading="lazy"
+              />
 
-            <div className="flex items-center px-2 h-14 min-h-10 img-title">
-              <a href={`/detail/${item.mal_id}`}>{item.title}</a>
+              <div className="flex items-center px-2 h-14 min-h-10 img-title">
+                <a href={`/detail/${item.mal_id}`}>{item.title}</a>
+              </div>
             </div>
-          </div>
-        ))}
+          ));
+        })}
       </div>
     );
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchMore();
-        }
-      },
-      { threshold: 1 }
-    );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    if (inView) {
+      setPage(page + 1);
+      fetchNextPage();
     }
-
-    return () => {
-      if (observerTarget.current) observer.unobserve(observerTarget.current);
-    };
-  }, [observerTarget]);
+  }, [inView]);
 
   return (
     <AppWrapper>
       <>
-        <SearchInput onChange={handleSearchChange} />
-
-        <section className="my-4 main-content">
+        <section className="pt-8 my-4 main-content">
           <div className="title">
-            <p className="mb-4 font-bold">Anime Lists</p>
+            <p className="mb-4 text-xl font-bold">Anime Lists</p>
           </div>
 
           {renderContent()}
 
-          <div ref={observerTarget}></div>
+          <div ref={ref}></div>
         </section>
       </>
     </AppWrapper>
