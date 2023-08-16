@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import AppWrapper from "../../components/app-wrapper";
 import { fetchAnimeDetail } from "../../lib/services/anime.service";
+import ButtonAddFavorite from "./components/button-add-favorites";
+import { Anime } from "../../lib/api/type";
 
 export default function AnimeDetail() {
   const params = useParams();
@@ -30,9 +32,13 @@ export default function AnimeDetail() {
           </div>
 
           <div className="app-menu__favorites">
-            <button className="px-2 py-1 text-sm text-white bg-pink-400 button">
+            <ButtonAddFavorite anime={detail?.data as Anime} />
+            {/* <button
+              className="px-2 py-1 text-sm text-white bg-pink-400 button"
+              onClick={handleAddToFavorite}
+            >
               Add as Favorite
-            </button>
+            </button> */}
           </div>
         </div>
 

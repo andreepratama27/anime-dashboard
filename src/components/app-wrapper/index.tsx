@@ -5,7 +5,7 @@ export default function AppWrapper({
 }) {
   return (
     <main className="">
-      <nav className="fixed top-0 w-full py-4 bg-violet-800">
+      <nav className="fixed top-0 z-10 w-full py-4 bg-violet-800">
         <div className="max-w-2xl mx-auto">
           <a href="/" className="text-lg font-bold text-white">
             AnimeTha

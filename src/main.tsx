@@ -8,10 +8,12 @@ import "./index.css";
 import AnimeDetail from "./pages/anime-detail";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Favorite from "./pages/favorite/index.tsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/detail/:id", element: <AnimeDetail /> },
+  { path: "/favorite", element: <Favorite /> },
 ]);
 
 const queryClient = new QueryClient({
