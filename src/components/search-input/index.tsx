@@ -4,7 +4,7 @@ interface SearchInputProps {
 
 export default function SearchInput({ onChange }: SearchInputProps) {
   return (
-    <div className="mt-24 mb-8 content-search">
+    <div className="mb-8 content-search">
       <input
         type="text"
         placeholder="Search Anime and more..."

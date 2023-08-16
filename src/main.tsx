@@ -9,11 +9,13 @@ import AnimeDetail from "./pages/anime-detail";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Favorite from "./pages/favorite/index.tsx";
+import Search from "./pages/search/index.tsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App /> },
+  { path: "/", element: <App />, errorElement: <p>Error</p> },
   { path: "/detail/:id", element: <AnimeDetail /> },
   { path: "/favorite", element: <Favorite /> },
+  { path: "/search", element: <Search /> },
 ]);
 
 const queryClient = new QueryClient({

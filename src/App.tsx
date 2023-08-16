@@ -3,13 +3,11 @@ import { fetchAnime } from "./lib/services/anime.service";
 import { useInfiniteQuery } from "react-query";
 import AppWrapper from "./components/app-wrapper";
 import { useInView } from "react-intersection-observer";
-import { useStore } from "./lib/store";
 import AnimeList from "./components/anime-list";
 
 function App() {
   const { ref, inView } = useInView();
   const [page, setPage] = useState(1);
-  const { favorites, addFavorite } = useStore();
 
   const { data, fetchNextPage } = useInfiniteQuery(
     ["animeInfinite"],

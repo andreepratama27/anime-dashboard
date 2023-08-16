@@ -6,10 +6,25 @@ export default function AppWrapper({
   return (
     <main className="">
       <nav className="fixed top-0 z-10 w-full py-4 bg-violet-800">
-        <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between max-w-2xl mx-auto">
           <a href="/" className="text-lg font-bold text-white">
             AnimeTha
           </a>
+
+          <div className="navbar-right">
+            <ul className="flex gap-6">
+              <li>
+                <a href="/search" className="text-white">
+                  Search
+                </a>
+              </li>
+              <li>
+                <a href="/favorite" className="text-white">
+                  Favorite
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
 

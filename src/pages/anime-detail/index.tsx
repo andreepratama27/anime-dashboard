@@ -33,12 +33,6 @@ export default function AnimeDetail() {
 
           <div className="app-menu__favorites">
             <ButtonAddFavorite anime={detail?.data as Anime} />
-            {/* <button
-              className="px-2 py-1 text-sm text-white bg-pink-400 button"
-              onClick={handleAddToFavorite}
-            >
-              Add as Favorite
-            </button> */}
           </div>
         </div>
 
