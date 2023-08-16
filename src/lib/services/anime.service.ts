@@ -11,7 +11,7 @@ export const fetchAnime = async ({
 }): Promise<AnimeResponse> => {
   try {
     const response = await fetch(
-      `${ApiUrl}/anime?page=${page}&limit=10&q=${filter}`,
+      `${ApiUrl}/anime?page=${page}&limit=9&q=${filter}`,
       {
         cache: "no-cache",
       }

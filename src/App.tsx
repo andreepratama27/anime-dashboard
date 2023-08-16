@@ -4,12 +4,13 @@ import { useInfiniteQuery } from "react-query";
 import AppWrapper from "./components/app-wrapper";
 import { useInView } from "react-intersection-observer";
 import AnimeList from "./components/anime-list";
+import Shimmer from "./components/shimmer";
 
 function App() {
   const { ref, inView } = useInView();
   const [page, setPage] = useState(1);
 
-  const { data, fetchNextPage } = useInfiniteQuery(
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery(
     ["animeInfinite"],
     async () => {
       const response = await fetchAnime({ page });
@@ -28,6 +29,7 @@ function App() {
   );
 
   const renderContent = () => {
+    if (isLoading) return <Shimmer length={6} />;
     return (
       <div className="grid grid-cols-3 gap-4 anime-grid">
         {data?.pages?.map((page, key) => (
@@ -53,7 +55,9 @@ function App() {
 
         {renderContent()}
 
-        <div ref={ref}></div>
+        <div ref={ref}>
+          <Shimmer />
+        </div>
       </section>
     </AppWrapper>
   );
