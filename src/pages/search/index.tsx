@@ -26,6 +26,7 @@ export default function Search() {
   const renderContent = () => {
     if (isLoading) return <Shimmer />;
 
+    // Initial UI
     if (search === "") {
       return (
         <div className="flex items-center justify-center w-full h-20 gap-2 bg-gray-100">
@@ -37,6 +38,7 @@ export default function Search() {
       );
     }
 
+    // When result not found
     if (data?.data?.length <= 0) {
       return (
         <div className="flex items-center justify-center w-full h-20 gap-2 bg-gray-100">
