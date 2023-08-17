@@ -10,25 +10,25 @@ I build this web app by using "Mobile First" design. The reason is, for easy dev
 
 ## Library
 
-* Zustand
+#### Zustand
 
 I use Zustand as a state management. The reason is:
 - Zustand has very small package (around 1kb) compared to other state management library and made it one of the smallest state management library.
 - Zustand API already have some feature like Storage that I use in Favorite Page.
 
-* React Query
+#### React Query
 
 I use react-query as data fetcher. The other reason I use `react-query` is because it has built in <em>caching-strategy</em> and provide API for infinite scrolling by use `useInfiniteQuery`
 
-* Tailwind CSS
+#### Tailwind CSS
 
 I use Tailwind CSS for rapid styling with scss. Also following BEM rules to naming className
 
-* Typescript
+#### Typescript
 
 I Use Typescript for better type checking.
 
-* Vitest
+#### Vitest
 
 Since I create project by using Vite, it would be nice if I also integrated it with Vitest for Component & API Testing
 
@@ -41,9 +41,8 @@ Since I create project by using Vite, it would be nice if I also integrated it w
 
 ## Things to Improve
 
-* Image Optimization
+* Image Optimization (implement lazy-loading image)
 * useTransition API for better transition when loading
-* Design System using CVA
-* Offline First
+* Design System using CVA (for better handling long className from tailwind css)
+* Offline First (react-query actuallyl have feature for this, but still in <em>Experimental</em>)
 * Protected Route
-
