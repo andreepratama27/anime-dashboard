@@ -6,10 +6,10 @@ interface FavoriteStore {
   favorites: Anime[];
   addFavorite: (item: Anime) => void;
   removeFavorite: (item: Anime) => void;
-  isFavorited: (item: Anime) => Anime;
+  isFavorited: (item: Anime) => boolean;
 }
 
-export const useStore = create<FavoriteStore>(
+export const useStore = create<FavoriteStore>()(
   persist(
     (set, get) => ({
       favorites: [],
@@ -20,7 +20,7 @@ export const useStore = create<FavoriteStore>(
       },
       removeFavorite: (item: Anime) => {
         const filter = get().favorites.filter((x) => x.mal_id !== item?.mal_id);
-        set((state) => ({
+        set(() => ({
           favorites: [...filter],
         }));
       },
