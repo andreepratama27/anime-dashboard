@@ -10,9 +10,10 @@ import AnimeDetail from "./pages/anime-detail";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Favorite from "./pages/favorite/index.tsx";
 import Search from "./pages/search/index.tsx";
+import ErrorBox from "./components/error-box/index.tsx";
 
 const router = createBrowserRouter([
-  { path: "/", element: <App />, errorElement: <p>Error</p> },
+  { path: "/", element: <App />, errorElement: <ErrorBox /> },
   { path: "/detail/:id", element: <AnimeDetail /> },
   { path: "/favorite", element: <Favorite /> },
   { path: "/search", element: <Search /> },
