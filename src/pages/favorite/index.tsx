@@ -12,7 +12,7 @@ export default function Favorite() {
           <p className="text-xl font-bold">Your Favorite Anime</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mt-4 anime-grid">
+        <div className="mt-4 anime-grid">
           <AnimeList list={favorites} />
         </div>
       </main>

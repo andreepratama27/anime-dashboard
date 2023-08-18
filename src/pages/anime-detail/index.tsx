@@ -14,7 +14,7 @@ export default function AnimeDetail() {
 
   return (
     <AppWrapper>
-      <main>
+      <main className="px-4 sm:px-4 md:px-0">
         <div className="pt-8 app-title">
           <p className="text-xl">{detail?.data?.title}</p>
         </div>

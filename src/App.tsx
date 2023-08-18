@@ -30,13 +30,9 @@ function App() {
 
   const renderContent = () => {
     if (isLoading) return <Shimmer length={6} />;
-    return (
-      <div className="grid grid-cols-3 gap-4 anime-grid">
-        {data?.pages?.map((page, key) => (
-          <AnimeList list={page.data} key={key} />
-        ))}
-      </div>
-    );
+    return data?.pages?.map((page, key) => (
+      <AnimeList list={page.data} key={key} />
+    ));
   };
 
   useEffect(() => {
@@ -50,7 +46,9 @@ function App() {
     <AppWrapper>
       <section className="pt-8 my-4 main-content">
         <div className="title">
-          <p className="mb-4 text-xl font-bold">Anime Lists</p>
+          <p className="px-4 mb-4 text-xl font-bold sm:px-4 md:px-0">
+            Anime Lists
+          </p>
         </div>
 
         {renderContent()}

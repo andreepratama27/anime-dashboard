@@ -39,14 +39,14 @@ export default function AnimeBox({ item }: { item: Anime }) {
       <div className="relative w-full h-72">
         <img
           src={item.images.webp.image_url}
-          className="w-full h-full"
+          className="object-cover w-full h-full"
           loading="lazy"
         />
 
         {renderButton()}
       </div>
 
-      <div className="flex items-center h-20 px-2 min-h-14 img-title">
+      <div className="flex h-20 px-2 pt-2 img-title overflow-ellipsis">
         <a href={`/detail/${item.mal_id}`}>{item.title}</a>
       </div>
     </div>
